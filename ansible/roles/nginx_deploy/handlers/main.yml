@@ -1,0 +1,13 @@
+---
+# handlers file for nginx_deploy
+
+- name: Start Jenkins
+  service:
+    name: jenkins
+    state: started
+    enabled: true
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted

@@ -1,0 +1,30 @@
+---
+# tasks file for nginx_deploy
+
+- name: Gather facts about ec2
+  amazon.aws.ec2_metadata_facts:
+
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: latest
+    update_cache: true
+  notify: Restart Nginx
+
+- name: Copy website
+  copy:
+    src: ./files/
+    dest: "{{ website_root }}"
+
+- name: Apply Nginx config
+  template:
+    src: ./templates/nginx.j2
+    dest: /etc/nginx/sites-available/default
+  notify: Restart Nginx
+
+- name: Enable nginx config
+  file:
+    src: '{{ nginx_sites_available }}/default'
+    dest: '{{ nginx_sites_enabled }}/default'
+    state: link
+  notify: Restart Nginx
