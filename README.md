@@ -1,3 +1,3 @@
 # Nginx AWS template
 
-Just template for nginx deployement on AWS.
+Just template for nginx deployment on AWS.
